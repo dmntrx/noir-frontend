@@ -1,0 +1,41 @@
+.layout {
+    display: flex;
+    height: 100vh; /* высота окна браузера */
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #15171a;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar li {
+    margin: 15px 0;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    color: rgba(255, 255, 255, 0.728);
+    text-decoration: none;
+}
+
+.content {
+    flex-grow: 1; /* занять все оставшееся место */
+    padding: 20px;
+    overflow-y: auto; /* скролл при большом количестве контента */
+}
