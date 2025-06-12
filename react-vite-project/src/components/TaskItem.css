@@ -1,0 +1,25 @@
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 4px 0;
+}
+
+.line-through {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.task-item button {
+  background: transparent;
+  border: none;
+  color: crimson;
+  cursor: pointer;
+  font-size: 1rem;
+}

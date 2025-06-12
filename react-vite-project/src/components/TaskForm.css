@@ -1,0 +1,19 @@
+.container {
+    margin: 10px;
+}
+
+.add-task button {
+  margin-left: 1vh;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
