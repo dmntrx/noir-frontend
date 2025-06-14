@@ -36,7 +36,7 @@ export default function Login() {
             const { access_token, user } = response.data;
 
             // сохранение токена и данных user в localStorage для дальнейшей работы
-            localStorage.setItem('token', access_token);
+            localStorage.setItem('access_token', access_token);
             localStorage.setItem('user', JSON.stringify(user));
 
             // перенаправление по ролям

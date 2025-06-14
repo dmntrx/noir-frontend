@@ -11,22 +11,27 @@ import Support from './pages/Support';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+import ProtectedRoute from './components/ProtectedRoute';
+
 export default function App() {
   return (
     <Router>
       <Routes>
+       {/* открытые маршруты */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* подключение общего Layout */}
-        <Route element={<Layout />}>
-          {/* описываем соответствие между путем и отображаемым компонентом */}
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/today" element={<Today />} />
-          <Route path="/upcoming" element={<Upcoming />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/support" element={<Support />} />
+
+        {/* защищённые маршруты */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/today" element={<Today />} />
+            <Route path="/upcoming" element={<Upcoming />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/statistics" element={<Statistics />} />
+            <Route path="/support" element={<Support />} />
+          </Route>
         </Route>
       </Routes>
     </Router>
