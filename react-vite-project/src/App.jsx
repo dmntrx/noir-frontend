@@ -8,10 +8,15 @@ import Calendar from './pages/Calendar';
 import Statistics from './pages/Statistics';
 import Support from './pages/Support';
 
+import Login from './pages/Login';
+import Register from './pages/Register';
+
 export default function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         {/* подключение общего Layout */}
         <Route element={<Layout />}>
           {/* описываем соответствие между путем и отображаемым компонентом */}
