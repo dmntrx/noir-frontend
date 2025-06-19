@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import './AuthForm.css';
+import API from '../api.js';
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -15,14 +16,37 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/auth/register", {
+      const response = await API.post("/auth/register", {
         email,
         password,
         role,
       });
 
       alert("Registration succeeded!");
-      navigate("/login"); // переход на страницу входа
+      // navigate("/login"); // переход на страницу входа
+      // сразу логиним
+      const formData = new URLSearchParams();
+      formData.append('username', email);
+      formData.append('password', password);
+
+      const loginResponse = await API.post("/auth/login", formData, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+
+      const { access_token, user } = loginResponse.data;
+
+      // сохраняем токен и юзера
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      // редирект по роли
+      if (user.role === 'admin') {
+        navigate('/admin/profile');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError(err.response?.data?.detail || "Registration error");
     }

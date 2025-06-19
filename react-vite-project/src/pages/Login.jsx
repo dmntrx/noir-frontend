@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 // для отправки HTTP-запросов (мощнее чем fetch)
 import './AuthForm.css';
+import API from '../api.js';
 
 export default function Login() {
     // состояния для email, password, ошибки при логине
@@ -26,7 +27,7 @@ export default function Login() {
 
         try {
             // запрос авторизации
-            const response = await axios.post('http://localhost:8000/auth/login', formData, {
+            const response = await API.post('/auth/login', formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -35,6 +36,8 @@ export default function Login() {
             // обработка ответа
             const { access_token, user } = response.data;
 
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user');
             // сохранение токена и данных user в localStorage для дальнейшей работы
             localStorage.setItem('access_token', access_token);
             localStorage.setItem('user', JSON.stringify(user));
