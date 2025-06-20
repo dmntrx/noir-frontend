@@ -76,3 +76,35 @@ select {
 .subtask-button {
   margin-top: 1rem;
 }
+
+.ul-subtasks {
+  padding-left: 0;
+}
+
+.li-subtasks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+  gap: 1rem;
+}
+
+.li-subtasks button, .modal-button .delete-button {
+  background: transparent;
+  border: none;
+  color: crimson;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+input {
+  margin-top: 1rem;
+}
+
+.modal-button button {
+  background: transparent;
+  border: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 1rem;
+}

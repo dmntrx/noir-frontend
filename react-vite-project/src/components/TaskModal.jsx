@@ -98,18 +98,14 @@ export default function TaskModal({ isOpen, onClose, onAdd, onUpdate, task, task
               </>
             )}
 
-            <div className='modal-button'>
-                <button onClick={handleSave}>{task ? 'Save Changes' : 'Create Task'}</button>
-                {task && <button onClick={() => handleDelete(task.id)}>Delete Task</button>}
-                <button onClick={onClose}>Close</button>
-            </div>
+            
 
             {task && !task.parent_task_id && (
                 <>
                 <h3>Subtasks</h3>
-                <ul>
+                <ul className='ul-subtasks'>
                     {subtasks.map(subtask => (
-                    <li key={subtask.id}>
+                    <li className='li-subtasks' key={subtask.id}>
                         {subtask.title}
                         <button onClick={() => handleDelete(subtask.id)}>Delete</button>
                     </li>
@@ -126,6 +122,11 @@ export default function TaskModal({ isOpen, onClose, onAdd, onUpdate, task, task
             )}
 
             
+            <div className='modal-button'>
+                <button onClick={handleSave}>{task ? 'Save Changes' : 'Create Task'}</button>
+                {task && <button className='delete-button' onClick={() => handleDelete(task.id)}>Delete Task</button>}
+                <button onClick={onClose}>Close</button>
+            </div>
         </div>
     </div>
   );
