@@ -16,8 +16,8 @@ export default function TaskList({ tasks = [], allTasks = [], onToggle, onDelete
     }
 
     const sortedTasks = [...tasks].sort((a, b) => {
-        if (a.completed === b.completed) return 0;
-        return a.completed ? 1 : -1;
+        if (a.is_completed === b.is_completed) return 0;
+        return a.is_completed ? 1 : -1;
     });
 
   return (

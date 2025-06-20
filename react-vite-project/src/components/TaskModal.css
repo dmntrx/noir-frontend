@@ -41,23 +41,38 @@
 .modal form {
   display: flex;
   flex-direction: column;
-  gap: 1rem; /* пространство между элементами */
+  gap: 1rem;
 }
 
-.modal input,
-.modal select {
+.modal input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 1px;
+  border: 1px solid #ccc;
+  width: 20rem;
+}
+
+.modal .modal-button {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+
+select {
+  margin-top: 0.5rem;
   padding: 0.5rem;
   font-size: 1rem;
   border-radius: 1px;
   border: 1px solid #ccc;
 }
 
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+.modal label {
+  /* margin-left: 0.5rem; */
+  display: block;
+  margin-top: 1rem;
 }
 
-select {
-  margin-left: 1rem;
+.subtask-button {
+  margin-top: 1rem;
 }

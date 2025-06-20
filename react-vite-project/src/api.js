@@ -4,7 +4,7 @@ const API = axios.create({
   baseURL: 'http://localhost:8000',
 });
 
-// Добавляем токен ко всем запросам
+// добавляем токен ко всем запросам
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
   if (token) {
@@ -12,5 +12,18 @@ API.interceptors.request.use((config) => {
   }
   return config;
 });
+
+API.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('access_token');
+
+      // редирект на логин
+      window.location.href = '/login'; 
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default API;

@@ -1,9 +1,9 @@
 import React from 'react';
 import './TaskItem.css';
 
-export default function TaskItem({ task, onToggle, onDelete }) {
+export default function TaskItem({ task, onToggle, onDelete, onEdit }) {
     const handleToggle = () => {
-    onToggle(task.id, !task.completed);
+    onToggle(task.id, !task.is_completed);
     };
 
     return (
@@ -11,10 +11,10 @@ export default function TaskItem({ task, onToggle, onDelete }) {
             <li className='task-item'>
                 <input
                 type="checkbox"
-                checked={task.completed}
+                checked={task.is_completed}
                 onChange={handleToggle} 
                 />
-                <span className={task.completed ? 'line-through' : ''}>
+                <span className={task.is_completed ? 'line-through' : ''}>
                     {task.title}
                 </span>
                 <button onClick={() => onEdit(task)}>Edit</button>
