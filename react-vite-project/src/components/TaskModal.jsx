@@ -29,7 +29,8 @@ export default function TaskModal({ isOpen, onClose, onAdd, onUpdate, task, task
         title,
         description: task.description || "",
         date: task.date,
-        priority: task.priority,
+        // priority: task.
+        priority,
         is_completed: task.is_completed,
         parent_task_id: task.parent_task_id || null
         };
