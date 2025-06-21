@@ -30,6 +30,9 @@ export default function Today() {
     });
   };
 
+  // продуктивность по дням
+  const [productivity, setProductivity] = useState(0);
+
 
   useEffect(() => {
   API.get('/tasks/')
@@ -45,6 +48,26 @@ export default function Today() {
     })
     .catch((err) => console.error(err));
 }, []);
+
+
+  // обновление продуктивности (при перелистывании дней и вычеркивании задач)
+  useEffect(() => {
+  const fetchProductivity = async () => {
+    try {
+      const res = await API.get('/productivity/', {
+        params: {
+          date_str: selectedDate.toISOString().split('T')[0]
+        }
+      });
+      setProductivity(res.data.productivity);
+    } catch (err) {
+      console.error("Failed to fetch productivity", err);
+      setProductivity(0);
+    }
+  };
+
+  fetchProductivity();
+}, [selectedDate, tasks]); // пересчитывать при смене дня или задач
 
 const addTask = async (title, priority = 2, date, parent_task_id = null) => {
   const newTask = {
@@ -80,6 +103,20 @@ const toggleTask = async (id, completed) => {
     task.id === id ? { ...task, is_completed: completed } : task
   );
   setTasks(updated);
+
+  // продуктивность
+  await API.post('/productivity/update', null, {
+    params: {
+      date_str: taskToUpdate.date
+    }
+  });
+
+  const res = await API.get('/productivity/', {
+    params: {
+      date_str: taskToUpdate.date
+    }
+  });
+  setProductivity(res.data.productivity);  
 };
 
 
@@ -114,8 +151,11 @@ const deleteTask = async (id) => {
   return (
     <>
       {/* <h1>TODAY — {today}</h1> */}
-      <h1>{formattedDate === today ? `TODAY — ${formattedDate}` : formattedDate}</h1>
-        {/* <button onClick={() => setIsModalOpen(true)}>Add Task</button> */}
+      <h1>{formattedDate === today ? `TODAY — ${formattedDate}` : formattedDate}
+        <span style={{ marginLeft: '1rem', fontSize: '0.8em', color: '#555' }}>
+          — Productivity: {productivity}%
+        </span>
+      </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <button onClick={goToPreviousDay}>←</button>
         <button onClick={goToNextDay}>→</button>
