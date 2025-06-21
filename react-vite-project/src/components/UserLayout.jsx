@@ -11,7 +11,7 @@ export default function UserLayout() {
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
                         <li><Link to="/today">Today</Link></li>
-                        <li><Link to="/upcoming">Upcoming</Link></li>
+                        {/* <li><Link to="/upcoming">Upcoming</Link></li> */}
                         <li><Link to="/calendar">Calendar</Link></li>
                         <li><Link to="/statistics">Statistics</Link></li>
                         <li><Link to="/support">Support</Link></li>

@@ -8,7 +8,7 @@ import './Calendar.css';
 export default function Calendar() {
     // текущее состояние (массив событий), ф-я изменения этого состояния
     const [events, setEvents] = useState([
-        { title: 'Event 1', date: '2025-06-17' }
+        // { title: 'Event 1', date: '2025-06-17' }
     ]);
 
     const handleDateClick = (info) => {
