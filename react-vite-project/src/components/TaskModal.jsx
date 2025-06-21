@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import "./TaskModal.css";
 import API from '../api';
 
-export default function TaskModal({ isOpen, onClose, onAdd, onUpdate, task, tasks }) {
+export default function TaskModal({ isOpen, onClose, onAdd, onUpdate, task, tasks, selectedDate }) {
   const token = localStorage.getItem('token');
 
   const [title, setTitle] = useState('');
@@ -37,7 +37,8 @@ export default function TaskModal({ isOpen, onClose, onAdd, onUpdate, task, task
         const res = await API.put(`/tasks/${task.id}`, updatedTask);
         onUpdate(res.data);
     } else {
-        onAdd(title, priority);
+        // onAdd(title, priority);
+        onAdd(title, priority, selectedDate.toISOString().split('T')[0]);
     }
     onClose();
 };
@@ -47,7 +48,7 @@ export default function TaskModal({ isOpen, onClose, onAdd, onUpdate, task, task
     const res = await API.post(`/tasks/`, {
       title: subtaskTitle,
       description: '',
-      date: new Date().toISOString().split('T')[0],
+      date: selectedDate.toISOString().split('T')[0],
       priority: 2,
       parent_task_id: task.id
     }, {

@@ -10,6 +10,26 @@ export default function Today() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
 
+  // для переключения между днями
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const goToPreviousDay = () => {
+  setSelectedDate(prev => {
+    // создаем копию, чтобы не мутировать оригинал
+    const newDate = new Date(prev);
+    newDate.setDate(newDate.getDate() - 1);
+    return newDate;
+  });
+};
+
+  const goToNextDay = () => {
+    setSelectedDate(prev => {
+      const newDate = new Date(prev);
+      newDate.setDate(newDate.getDate() + 1);
+      return newDate;
+    });
+  };
+
 
   useEffect(() => {
   API.get('/tasks/')
@@ -26,11 +46,11 @@ export default function Today() {
     .catch((err) => console.error(err));
 }, []);
 
-const addTask = async (title, priority = 2, parent_task_id = null) => {
+const addTask = async (title, priority = 2, date, parent_task_id = null) => {
   const newTask = {
     title,
     description: '',
-    date: new Date().toISOString().split('T')[0],
+    date,
     priority,
     parent_task_id,
   };
@@ -38,6 +58,7 @@ const addTask = async (title, priority = 2, parent_task_id = null) => {
   const res = await API.post('/tasks/', newTask);
   setTasks([...tasks, res.data]);
 };
+
 
 const toggleTask = async (id, completed) => {
   const taskToUpdate = tasks.find(task => task.id === id);
@@ -73,6 +94,12 @@ const deleteTask = async (id) => {
     month: 'long',
     day: 'numeric',
   });
+  const formattedDate = selectedDate.toLocaleDateString('en-EN', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+
 
   const priorities = {
     1: 'A-Priority',
@@ -80,10 +107,21 @@ const deleteTask = async (id) => {
     3: 'C-Priority',
   };
 
+  // фильтрация задач по дате
+  const selectedDateString = selectedDate.toISOString().split('T')[0];
+  // строку формата "2025-06-19T08:00:00.000Z" берем до Т
+  const filteredTasks = tasks.filter(task => task.date === selectedDateString);
   return (
     <>
-      <h1>TODAY — {today}</h1>
+      {/* <h1>TODAY — {today}</h1> */}
+      <h1>{formattedDate === today ? `TODAY — ${formattedDate}` : formattedDate}</h1>
+        {/* <button onClick={() => setIsModalOpen(true)}>Add Task</button> */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <button onClick={goToPreviousDay}>←</button>
+        <button onClick={goToNextDay}>→</button>
         <button onClick={() => setIsModalOpen(true)}>Add Task</button>
+</div>
+
       <TaskModal
         isOpen={isModalOpen}
         onClose={() => {
@@ -108,12 +146,14 @@ const deleteTask = async (id) => {
         }}
         task={editingTask}
         tasks={tasks}
+        selectedDate={selectedDate}
         />
 
 
       {[1, 2, 3].map(priority => {
         const allTasksArray = Array.isArray(tasks) ? tasks : [];
-        const topLevelTasks = allTasksArray.filter(
+        // const topLevelTasks = allTasksArray.filter(
+        const topLevelTasks = filteredTasks.filter(
         task => task.priority === priority && !task.parent_task_id
         );
         return (
