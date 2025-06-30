@@ -63,12 +63,6 @@ export default function Register() {
         <label>Password:</label>
         <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
 
-        <label>Role:</label>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
         <button type="submit">Sign up</button>
