@@ -139,9 +139,9 @@ const deleteTask = async (id) => {
 
 
   const priorities = {
-    1: 'A-Priority',
-    2: 'B-Priority',
-    3: 'C-Priority',
+    1: '1st priority',
+    2: '2nd priority',
+    3: '3rd priority',
   };
 
   // фильтрация задач по дате
